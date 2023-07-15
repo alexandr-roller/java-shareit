@@ -1,6 +1,5 @@
-package ru.practicum.shareit.user;
+package ru.practicum.shareit.user.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.lang.Nullable;
@@ -12,9 +11,8 @@ import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 @Data
-@Builder(builderMethodName = "userBuilder")
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class User {
+@Builder(builderMethodName = "userDtoBuilder")
+public class UserDto {
     private long id;
 
     @Email
