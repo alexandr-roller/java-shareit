@@ -4,12 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 import ru.practicum.shareit.booking.util.BookingStatus;
-import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.user.dto.UserDto;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Data
@@ -24,11 +23,9 @@ public class BookingDto {
     @Future
     private LocalDateTime end;
 
-    @NotBlank
-    private Item item;
+    private ItemDto item;
 
-    @NotBlank
-    private User booker;
+    private UserDto booker;
 
     private BookingStatus bookingStatus;
 }

@@ -1,7 +1,17 @@
 package ru.practicum.shareit.booking.service;
 
-import ru.practicum.shareit.booking.Booking;
-import ru.practicum.shareit.common.Crud;
+import ru.practicum.shareit.booking.dto.BookingDto;
 
-public interface BookingService extends Crud<Booking> {
+import java.util.List;
+
+public interface BookingService {
+    List<BookingDto> findAll();
+
+    BookingDto findById(long id);
+
+    BookingDto save(BookingDto model);
+
+    BookingDto update(long id, BookingDto model);
+
+    void delete(long id);
 }

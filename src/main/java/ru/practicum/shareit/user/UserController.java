@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.service.UserService;
 
-import java.util.List;
+import javax.validation.Valid;
+import java.util.Collection;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -14,27 +15,28 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<UserDto> findAll() {
+    public Collection<UserDto> findAll() {
         return userService.findAll();
     }
 
-    @GetMapping
-    public UserDto findById(@RequestHeader("X-SharIt-User-Id") long id) {
+    @GetMapping(value = "/{id}")
+    public UserDto findById(@PathVariable long id) {
         return userService.findById(id);
     }
 
     @PostMapping
-    public UserDto save(UserDto userDto) {
+    public UserDto save(@Valid @RequestBody UserDto userDto) {
         return userService.save(userDto);
     }
 
-    @PutMapping
-    public UserDto update(UserDto userDto) {
-        return userService.update(userDto);
+    @PatchMapping(value = "/{id}")
+    public UserDto update(@PathVariable long id,
+                          @RequestBody UserDto userDto) {
+        return userService.update(id, userDto);
     }
 
-    @DeleteMapping
-    public void delete(long id) {
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable long id) {
         userService.delete(id);
     }
 }

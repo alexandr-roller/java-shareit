@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserMapper {
-    public static User toUser(UserDto userDto){
+    public static User toUser(UserDto userDto) {
         return User.userBuilder()
                 .id(userDto.getId())
                 .email(userDto.getEmail())
                 .login(userDto.getLogin())
                 .name(userDto.getName())
-                .birthday(userDto.getBirthday())
                 .build();
     }
 
@@ -22,7 +21,6 @@ public class UserMapper {
                 .email(user.getEmail())
                 .login(user.getLogin())
                 .name(user.getName())
-                .birthday(user.getBirthday())
                 .build();
     }
 

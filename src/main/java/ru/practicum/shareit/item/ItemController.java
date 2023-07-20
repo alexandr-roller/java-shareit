@@ -6,7 +6,8 @@ import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.service.ItemService;
 
 import javax.validation.Valid;
-import java.util.List;
+import javax.validation.constraints.NotNull;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/items")
@@ -15,8 +16,8 @@ public class ItemController {
     private final ItemService itemService;
 
     @GetMapping
-    public List<ItemDto> findAll() {
-        return itemService.findAll();
+    public Collection<ItemDto> findAllByOwner(@NotNull @RequestHeader("X-Sharer-User-Id") long userId) {
+        return itemService.findAllByOwner(userId);
     }
 
     @GetMapping(value = "/{id}")
@@ -24,23 +25,27 @@ public class ItemController {
         return itemService.findById(id);
     }
 
-    @GetMapping(value = "/{search}")
-    public List<ItemDto> search(@RequestParam String query) {
+    @GetMapping(value = "/search")
+    public Collection<ItemDto> search(@RequestParam(name = "text") String query) {
         return itemService.search(query);
     }
 
     @PostMapping
-    private ItemDto save(@Valid @RequestBody ItemDto itemDto) {
-        return itemService.save(itemDto);
+    public ItemDto save(@NotNull @RequestHeader("X-Sharer-User-Id") long userId,
+                        @Valid @RequestBody ItemDto itemDto) {
+        return itemService.save(userId, itemDto);
     }
 
-    @PutMapping
-    public ItemDto update(@Valid @RequestBody ItemDto itemDto) {
-        return itemService.update(itemDto);
+    @PatchMapping(value = "/{id}")
+    public ItemDto update(@NotNull @RequestHeader("X-Sharer-User-Id") long userId,
+                          @PathVariable long id,
+                          @RequestBody ItemDto itemDto) {
+        return itemService.update(userId, id, itemDto);
     }
 
     @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable long id) {
-        itemService.delete(id);
+    public void delete(@NotNull @RequestHeader("X-Sharer-User-Id") long userId,
+                       @PathVariable long id) {
+        itemService.delete(userId, id);
     }
 }

@@ -1,10 +1,12 @@
 package ru.practicum.shareit.booking.repository;
 
+import org.springframework.stereotype.Component;
 import ru.practicum.shareit.booking.Booking;
 
 import java.util.List;
 
-public class BookingRepositoryImpl implements BookingRepository{
+@Component
+public class BookingRepositoryImpl implements BookingRepository {
     @Override
     public List<Booking> findAll() {
         return null;
@@ -21,7 +23,7 @@ public class BookingRepositoryImpl implements BookingRepository{
     }
 
     @Override
-    public Booking update(Booking model) {
+    public Booking update(long id, Booking model) {
         return null;
     }
 

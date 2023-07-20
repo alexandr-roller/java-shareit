@@ -1,10 +1,12 @@
 package ru.practicum.shareit.request.repository;
 
+import org.springframework.stereotype.Component;
 import ru.practicum.shareit.request.ItemRequest;
 
 import java.util.List;
 
-public class ItemRequestRepositoryImpl implements ItemRequestRepository{
+@Component
+public class ItemRequestRepositoryImpl implements ItemRequestRepository {
     @Override
     public List<ItemRequest> findAll() {
         return null;
@@ -21,7 +23,7 @@ public class ItemRequestRepositoryImpl implements ItemRequestRepository{
     }
 
     @Override
-    public ItemRequest update(ItemRequest model) {
+    public ItemRequest update(long id, ItemRequest model) {
         return null;
     }
 

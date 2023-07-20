@@ -3,9 +3,9 @@ package ru.practicum.shareit.request.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
-import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.user.dto.UserDto;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,8 +16,8 @@ public class ItemRequestDto {
 
     private String description;
 
-    @NotBlank
-    private User requester;
+    @NotNull
+    private UserDto requester;
 
     private LocalDateTime created;
 }

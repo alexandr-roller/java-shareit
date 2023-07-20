@@ -1,32 +1,40 @@
 package ru.practicum.shareit.booking.service;
 
-import ru.practicum.shareit.booking.Booking;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.practicum.shareit.booking.dto.BookingDto;
+import ru.practicum.shareit.booking.dto.BookingMapper;
+import ru.practicum.shareit.booking.repository.BookingRepository;
 
 import java.util.List;
 
-public class BookingServiceImpl implements BookingService{
+@Service
+@RequiredArgsConstructor
+public class BookingServiceImpl implements BookingService {
+    private final BookingRepository bookingRepository;
+
     @Override
-    public List<Booking> findAll() {
-        return null;
+    public List<BookingDto> findAll() {
+        return BookingMapper.toBookingDto(bookingRepository.findAll());
     }
 
     @Override
-    public Booking findById(long id) {
-        return null;
+    public BookingDto findById(long id) {
+        return BookingMapper.toBookingDto(bookingRepository.findById(id));
     }
 
     @Override
-    public Booking save(Booking model) {
-        return null;
+    public BookingDto save(BookingDto bookingDto) {
+        return BookingMapper.toBookingDto(bookingRepository.save(BookingMapper.toBooking(bookingDto)));
     }
 
     @Override
-    public Booking update(Booking model) {
-        return null;
+    public BookingDto update(long id, BookingDto bookingDto) {
+        return BookingMapper.toBookingDto(bookingRepository.update(id, BookingMapper.toBooking(bookingDto)));
     }
 
     @Override
     public void delete(long id) {
-
+        bookingRepository.delete(id);
     }
 }

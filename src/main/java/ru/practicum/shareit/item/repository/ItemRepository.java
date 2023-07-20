@@ -1,10 +1,19 @@
 package ru.practicum.shareit.item.repository;
 
-import ru.practicum.shareit.common.Crud;
 import ru.practicum.shareit.item.model.Item;
 
-import java.util.List;
+import java.util.Collection;
 
-public interface ItemRepository extends Crud<Item> {
-    List<Item> search(String query);
+public interface ItemRepository {
+    Collection<Item> findAllByOwner(long userId);
+
+    Item findById(long id);
+
+    Collection<Item> search(String query);
+
+    Item save(Item item);
+
+    Item update(Item item);
+
+    void delete(long id);
 }

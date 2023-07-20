@@ -1,7 +1,17 @@
 package ru.practicum.shareit.request.repository;
 
-import ru.practicum.shareit.common.Crud;
 import ru.practicum.shareit.request.ItemRequest;
 
-public interface ItemRequestRepository extends Crud<ItemRequest> {
+import java.util.List;
+
+public interface ItemRequestRepository {
+    List<ItemRequest> findAll();
+
+    ItemRequest findById(long id);
+
+    ItemRequest save(ItemRequest model);
+
+    ItemRequest update(long id, ItemRequest model);
+
+    void delete(long id);
 }

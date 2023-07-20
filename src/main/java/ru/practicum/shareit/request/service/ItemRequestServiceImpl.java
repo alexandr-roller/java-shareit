@@ -1,32 +1,40 @@
 package ru.practicum.shareit.request.service;
 
-import ru.practicum.shareit.request.ItemRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.practicum.shareit.request.dto.ItemRequestDto;
+import ru.practicum.shareit.request.dto.ItemRequestMapper;
+import ru.practicum.shareit.request.repository.ItemRequestRepository;
 
 import java.util.List;
 
-public class ItemRequestServiceImpl implements ItemRequestService{
+@Service
+@RequiredArgsConstructor
+public class ItemRequestServiceImpl implements ItemRequestService {
+    private final ItemRequestRepository itemRequestRepository;
+
     @Override
-    public List<ItemRequest> findAll() {
-        return null;
+    public List<ItemRequestDto> findAll() {
+        return ItemRequestMapper.toItemRequestDto(itemRequestRepository.findAll());
     }
 
     @Override
-    public ItemRequest findById(long id) {
-        return null;
+    public ItemRequestDto findById(long id) {
+        return ItemRequestMapper.toItemRequestDto(itemRequestRepository.findById(id));
     }
 
     @Override
-    public ItemRequest save(ItemRequest model) {
-        return null;
+    public ItemRequestDto save(ItemRequestDto itemRequestDto) {
+        return ItemRequestMapper.toItemRequestDto(itemRequestRepository.save(ItemRequestMapper.toItemRequest(itemRequestDto)));
     }
 
     @Override
-    public ItemRequest update(ItemRequest model) {
-        return null;
+    public ItemRequestDto update(long id, ItemRequestDto itemRequestDto) {
+        return ItemRequestMapper.toItemRequestDto(itemRequestRepository.update(id, ItemRequestMapper.toItemRequest(itemRequestDto)));
     }
 
     @Override
     public void delete(long id) {
-
+        itemRequestRepository.delete(id);
     }
 }
