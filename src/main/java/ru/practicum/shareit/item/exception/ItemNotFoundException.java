@@ -1,4 +1,4 @@
-package ru.practicum.shareit.item.exceprion;
+package ru.practicum.shareit.item.exception;
 
 import ru.practicum.shareit.common.ModelNotFoundException;
 

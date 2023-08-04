@@ -1,17 +1,86 @@
 package ru.practicum.shareit.booking.repository;
 
-import ru.practicum.shareit.booking.Booking;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import ru.practicum.shareit.booking.entity.Booking;
+import ru.practicum.shareit.booking.util.BookingStatus;
+import ru.practicum.shareit.item.model.Item;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface BookingRepository {
-    List<Booking> findAll();
+public interface BookingRepository extends JpaRepository<Booking, Long> {
+    List<Booking> findByItemId(Long itemId);
 
-    Booking findById(long id);
+    List<Booking> findByItemIn(List<Item> item);
 
-    Booking save(Booking model);
+    @Query("select b " +
+            " from Booking b " +
+            " join fetch b.item i " +
+            "where b.id = :id " +
+            "  and i.owner.id = :ownerId")
+    Optional<Booking> findByIdAndOwnerId(Long id, Long ownerId);
 
-    Booking update(long id, Booking model);
+    List<Booking> findByBookerId(Long bookerId, Sort sort);
 
-    void delete(long id);
+    @Query("select b " +
+            " from Booking b " +
+            "where b.start <= CURRENT_TIMESTAMP " +
+            "  and b.end >= CURRENT_TIMESTAMP " +
+            "  and b.booker.id = :bookerId ")
+    List<Booking> findByBookerIdCurrent(Long bookerId, Sort sort);
+
+    @Query("select b " +
+            " from Booking b " +
+            "where b.end < CURRENT_TIMESTAMP " +
+            "  and b.booker.id = :bookerId ")
+    List<Booking> findByBookerIdPast(Long bookerId, Sort sort);
+
+    @Query("select b " +
+            " from Booking b " +
+            "where b.start >= CURRENT_TIMESTAMP " +
+            "  and b.booker.id = :bookerId ")
+    List<Booking> findByBookerIdFuture(Long bookerId, Sort sort);
+
+    @Query("select b " +
+            " from Booking b " +
+            "where b.booker.id = :bookerId " +
+            "  and b.status = :status")
+    List<Booking> findByBookerIdAndStatus(Long bookerId, BookingStatus status);
+
+    @Query("select b " +
+            " from Booking b " +
+            " join fetch b.item i " +
+            "where i.owner.id = :ownerId ")
+    List<Booking> findByOwnerId(Long ownerId, Sort sort);
+
+    @Query("select b " +
+            " from Booking b " +
+            " join fetch b.item i " +
+            "where i.owner.id = :ownerId " +
+            "  and b.start <= CURRENT_TIMESTAMP " +
+            "  and b.end >= CURRENT_TIMESTAMP ")
+    List<Booking> findByOwnerIdCurrent(Long ownerId, Sort sort);
+
+    @Query("select b " +
+            " from Booking b " +
+            " join fetch b.item i " +
+            "where i.owner.id = :ownerId " +
+            "  and b.end < CURRENT_TIMESTAMP ")
+    List<Booking> findByOwnerIdPast(Long ownerId, Sort sort);
+
+    @Query("select b " +
+            " from Booking b " +
+            " join fetch b.item i " +
+            "where i.owner.id = :ownerId " +
+            "  and b.start >= CURRENT_TIMESTAMP ")
+    List<Booking> findByOwnerIdFuture(Long ownerId, Sort sort);
+
+    @Query("select b " +
+            " from Booking b " +
+            " join fetch b.item i " +
+            "where i.owner.id = :ownerId " +
+            "  and b.status = :status ")
+    List<Booking> findByOwnerIdAndStatus(Long ownerId, BookingStatus status, Sort sort);
 }

@@ -1,17 +1,7 @@
 package ru.practicum.shareit.request.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.practicum.shareit.request.ItemRequest;
 
-import java.util.List;
-
-public interface ItemRequestRepository {
-    List<ItemRequest> findAll();
-
-    ItemRequest findById(long id);
-
-    ItemRequest save(ItemRequest model);
-
-    ItemRequest update(long id, ItemRequest model);
-
-    void delete(long id);
+public interface ItemRequestRepository extends JpaRepository<ItemRequest, Long> {
 }
