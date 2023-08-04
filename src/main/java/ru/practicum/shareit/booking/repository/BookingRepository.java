@@ -28,22 +28,19 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             " from Booking b " +
             "where b.start <= CURRENT_TIMESTAMP " +
             "  and b.end >= CURRENT_TIMESTAMP " +
-            "  and b.booker.id = :bookerId " +
-            "order by :sort")
+            "  and b.booker.id = :bookerId ")
     List<Booking> findByBookerIdCurrent(Long bookerId, Sort sort);
 
     @Query("select b " +
             " from Booking b " +
             "where b.end < CURRENT_TIMESTAMP " +
-            "  and b.booker.id = :bookerId " +
-            "order by :sort")
+            "  and b.booker.id = :bookerId ")
     List<Booking> findByBookerIdPast(Long bookerId, Sort sort);
 
     @Query("select b " +
             " from Booking b " +
             "where b.start >= CURRENT_TIMESTAMP " +
-            "  and b.booker.id = :bookerId " +
-            "order by :sort")
+            "  and b.booker.id = :bookerId ")
     List<Booking> findByBookerIdFuture(Long bookerId, Sort sort);
 
     @Query("select b " +
@@ -55,8 +52,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query("select b " +
             " from Booking b " +
             " join fetch b.item i " +
-            "where i.owner.id = :ownerId " +
-            "order by :sort")
+            "where i.owner.id = :ownerId ")
     List<Booking> findByOwnerId(Long ownerId, Sort sort);
 
     @Query("select b " +
@@ -64,31 +60,27 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             " join fetch b.item i " +
             "where i.owner.id = :ownerId " +
             "  and b.start <= CURRENT_TIMESTAMP " +
-            "  and b.end >= CURRENT_TIMESTAMP " +
-            "order by :sort")
+            "  and b.end >= CURRENT_TIMESTAMP ")
     List<Booking> findByOwnerIdCurrent(Long ownerId, Sort sort);
 
     @Query("select b " +
             " from Booking b " +
             " join fetch b.item i " +
             "where i.owner.id = :ownerId " +
-            "  and b.end < CURRENT_TIMESTAMP " +
-            "order by :sort")
+            "  and b.end < CURRENT_TIMESTAMP ")
     List<Booking> findByOwnerIdPast(Long ownerId, Sort sort);
 
     @Query("select b " +
             " from Booking b " +
             " join fetch b.item i " +
             "where i.owner.id = :ownerId " +
-            "  and b.start >= CURRENT_TIMESTAMP " +
-            "order by :sort")
+            "  and b.start >= CURRENT_TIMESTAMP ")
     List<Booking> findByOwnerIdFuture(Long ownerId, Sort sort);
 
     @Query("select b " +
             " from Booking b " +
             " join fetch b.item i " +
             "where i.owner.id = :ownerId " +
-            "  and b.status = :status " +
-            "order by :sort")
+            "  and b.status = :status ")
     List<Booking> findByOwnerIdAndStatus(Long ownerId, BookingStatus status, Sort sort);
 }
