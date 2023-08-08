@@ -1,23 +1,37 @@
 package ru.practicum.shareit.request.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import ru.practicum.shareit.user.dto.UserDto;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder(builderClassName = "itemRequestDtoBuilder")
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ItemRequestDto {
-    private long id;
+    private Long id;
 
+    @NotBlank
     private String description;
 
-    @NotNull
     private UserDto requester;
 
     private LocalDateTime created;
+
+    private List<Item> items;
+
+    @Getter
+    @Builder
+    public static class Item {
+        private Long id;
+        private String name;
+        private String description;
+        private Boolean available;
+        private Long requestId;
+    }
 }

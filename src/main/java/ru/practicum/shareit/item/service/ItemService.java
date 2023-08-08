@@ -2,24 +2,23 @@ package ru.practicum.shareit.item.service;
 
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.model.Comment;
+import ru.practicum.shareit.item.entity.Comment;
 
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 
 public interface ItemService {
-    List<ItemDto> findAllByOwner(@NotNull long userId);
+    List<ItemDto> findAllByOwner(Long userId, Integer from, Integer size);
 
-    ItemDto findById(long id, long userId);
+    ItemDto findById(Long id, Long userId);
 
-    Collection<ItemDto> search(String query);
+    Collection<ItemDto> search(String query, Integer from, Integer size);
 
-    ItemDto save(long userId, ItemDto itemDto);
+    ItemDto save(Long userId, ItemDto itemDto);
 
-    ItemDto update(long userId, long id, ItemDto itemDto);
+    ItemDto update(Long userId, Long id, ItemDto itemDto);
 
-    void delete(long userId, long id);
+    void delete(Long userId, Long id);
 
     Comment createComment(CommentDto commentDto, Long itemId, Long userId);
 }

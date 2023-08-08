@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder(builderMethodName = "bookingDtoBuilder")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookingDto {
-    private long id;
+    private Long id;
 
     @FutureOrPresent
     private LocalDateTime start;

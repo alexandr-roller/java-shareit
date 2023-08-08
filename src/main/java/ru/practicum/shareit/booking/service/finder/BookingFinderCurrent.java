@@ -1,7 +1,7 @@
 package ru.practicum.shareit.booking.service.finder;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.booking.entity.Booking;
 import ru.practicum.shareit.booking.repository.BookingRepository;
@@ -15,13 +15,13 @@ public class BookingFinderCurrent implements BookingFinder {
     private final BookingRepository bookingRepository;
 
     @Override
-    public List<Booking> findByOwnerId(Long ownerId, Sort sort) {
-        return bookingRepository.findByOwnerIdCurrent(ownerId, sort);
+    public List<Booking> findByOwnerId(Long ownerId, Pageable pageable) {
+        return bookingRepository.findByOwnerIdCurrent(ownerId, pageable);
     }
 
     @Override
-    public List<Booking> findByBookerId(Long bookerId, Sort sort) {
-        return bookingRepository.findByBookerIdCurrent(bookerId, sort);
+    public List<Booking> findByBookerId(Long bookerId, Pageable pageable) {
+        return bookingRepository.findByBookerIdCurrent(bookerId, pageable);
     }
 
     @Override

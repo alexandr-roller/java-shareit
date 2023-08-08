@@ -1,9 +1,10 @@
 package ru.practicum.shareit.item.repository;
 
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.item.entity.Item;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,10 +16,10 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             " from Item i " +
             "where i.available = true " +
             "  and (lower(i.name) like '%'||lower(:name)||'%' or lower(i.description) like '%'||lower(:description)||'%')")
-    List<Item> findAvailableByNameOrDescription(String name, String description);
+    List<Item> findAvailableByNameOrDescription(String name, String description, PageRequest pageRequest);
 
     @Query("select i from Item i where i.owner.id = :ownerId")
-    List<Item> findByOwnerId(Long ownerId);
+    List<Item> findByOwnerId(Long ownerId, PageRequest pageRequest);
 
     @Query("select count(b.id) > 0 " +
             " from Booking b " +
@@ -34,4 +35,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "  and b.status = 'APPROVED'" +
             "  and b.start <= CURRENT_TIMESTAMP")
     boolean wasBookedByUser(Long itemId, Long userId);
+
+    List<Item> findByRequestIdIn(List<Long> requests);
 }
