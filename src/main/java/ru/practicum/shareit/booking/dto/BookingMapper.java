@@ -1,7 +1,7 @@
 package ru.practicum.shareit.booking.dto;
 
 import ru.practicum.shareit.booking.entity.Booking;
-import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.item.entity.Item;
 import ru.practicum.shareit.user.dto.UserMapper;
 
 import java.util.ArrayList;

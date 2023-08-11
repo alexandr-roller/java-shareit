@@ -132,7 +132,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleException(MethodArgumentTypeMismatchException ex) {
+    public ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
         log.warn(ex.getMessage());
         ex.printStackTrace();
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;

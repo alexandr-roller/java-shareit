@@ -11,9 +11,9 @@ public interface BookingService {
 
     Booking findById(Long bookingId, Long userId);
 
-    List<Booking> findByBookerId(Long bookerId, BookingState state);
+    List<Booking> findByBookerId(Long bookerId, BookingState state, Integer from, Integer size);
 
-    List<Booking> findByOwnerId(Long ownerId, BookingState state);
+    List<Booking> findByOwnerId(Long ownerId, BookingState state, Integer from, Integer size);
 
     enum BookingState {
         ALL, CURRENT, PAST, FUTURE, WAITING, REJECTED

@@ -1,9 +1,8 @@
 package ru.practicum.shareit.item.dto;
 
 import lombok.experimental.UtilityClass;
-import ru.practicum.shareit.item.model.Comment;
+import ru.practicum.shareit.item.entity.Comment;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,17 +10,18 @@ import java.util.List;
 public class CommentMapper {
     public Comment toComment(CommentDto commentDto) {
         return Comment.builder()
+                .id(commentDto.getId())
                 .text(commentDto.getText())
-                .created(LocalDateTime.now())
+                .created(commentDto.getCreated())
                 .build();
     }
 
-    public static List<Comment> toComment(Iterable<CommentDto> comments) {
-        List<Comment> dtos = new ArrayList<>();
-        for (CommentDto comment : comments) {
-            dtos.add(toComment(comment));
+    public static List<Comment> toComment(Iterable<CommentDto> dtos) {
+        List<Comment> comments = new ArrayList<>();
+        for (CommentDto dto : dtos) {
+            comments.add(toComment(dto));
         }
-        return dtos;
+        return comments;
     }
 
     public CommentDto toDto(Comment comment) {
