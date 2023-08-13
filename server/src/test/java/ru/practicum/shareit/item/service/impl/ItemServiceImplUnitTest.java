@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.common.CustomPageRequest;
 import ru.practicum.shareit.item.dto.CommentDto;
@@ -44,7 +45,7 @@ class ItemServiceImplUnitTest {
     private BookingRepository bookingRepository;
     @InjectMocks
     private ItemServiceImpl itemService;
-    private final PageRequest pageRequest = CustomPageRequest.of(0, 10);
+    private final PageRequest pageRequest = CustomPageRequest.of(0, 10, Sort.by("id").ascending());
 
     private final User user = User
             .userBuilder()

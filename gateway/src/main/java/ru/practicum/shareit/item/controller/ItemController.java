@@ -2,6 +2,7 @@ package ru.practicum.shareit.item.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,9 @@ import ru.practicum.shareit.item.dto.ItemDto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Collections;
+
+import static ru.practicum.shareit.common.ConstantsUtil.USER_ID_HEADER;
 
 @RestController
 @RequestMapping(path = "/items")
@@ -18,7 +22,6 @@ import javax.validation.constraints.NotNull;
 @Slf4j
 @Validated
 public class ItemController {
-    private static final String USER_ID_HEADER = "X-Sharer-User-Id";
     private final ItemClient itemClient;
 
     @PostMapping
@@ -61,7 +64,11 @@ public class ItemController {
             @NotNull @RequestHeader(USER_ID_HEADER) Long userId
     ) {
         log.info("Get items by name or description, text={}, userId={}", text, userId);
-        return itemClient.findByNameOrDescription(text, userId);
+        if (text.isBlank()) {
+            return ResponseEntity.status(HttpStatus.OK).body(Collections.emptyList());
+        } else {
+            return itemClient.findByNameOrDescription(text, userId);
+        }
     }
 
     @PostMapping(value = "/{itemId}/comment")

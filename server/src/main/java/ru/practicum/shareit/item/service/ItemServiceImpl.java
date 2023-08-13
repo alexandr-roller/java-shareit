@@ -3,6 +3,7 @@ package ru.practicum.shareit.item.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.entity.Booking;
@@ -39,7 +40,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> findAllByOwner(Long userId, Integer from, Integer size) {
-        PageRequest pageRequest = CustomPageRequest.of(from, size);
+        PageRequest pageRequest = CustomPageRequest.of(from, size, Sort.by("id").ascending());
         List<Item> items = itemRepository.findByOwnerId(userId, pageRequest);
         setDataFromDb(items, true);
         return ItemMapper.toItemDto(items);
@@ -60,14 +61,10 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> search(String query, Integer from, Integer size) {
-        if (query.isBlank()) {
-            return Collections.emptyList();
-        } else {
-            PageRequest pageRequest = CustomPageRequest.of(from, size);
+            PageRequest pageRequest = CustomPageRequest.of(from, size, Sort.by("id").ascending());
             List<Item> items = itemRepository.findAvailableByNameOrDescription(query, query, pageRequest);
             setDataFromDb(items, false);
             return ItemMapper.toItemDto(items);
-        }
     }
 
     @Transactional

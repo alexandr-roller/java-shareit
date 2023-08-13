@@ -13,6 +13,8 @@ import ru.practicum.shareit.booking.util.BookingStatus;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ru.practicum.shareit.common.ConstantsUtil.USER_ID_HEADER;
+
 @RestController
 @RequestMapping(path = "/bookings")
 @RequiredArgsConstructor
@@ -23,7 +25,7 @@ public class BookingController {
     @PostMapping
     public BookingDto create(
             @RequestBody BookingCreateRequestDto requestDto,
-            @RequestHeader("X-Sharer-User-Id") Long userId) {
+            @RequestHeader(USER_ID_HEADER) Long userId) {
         Booking booking = Booking
                 .bookingBuilder()
                 .start(requestDto.getStart())
@@ -36,7 +38,7 @@ public class BookingController {
 
     @PatchMapping(value = "/{bookingId}")
     public BookingDto approve(
-            @RequestHeader("X-Sharer-User-Id") Long ownerId,
+            @RequestHeader(USER_ID_HEADER) Long ownerId,
             @PathVariable Long bookingId,
             @RequestParam boolean approved) {
         return BookingMapper.toBookingDto(bookingService.approve(bookingId, ownerId, approved));
@@ -44,14 +46,14 @@ public class BookingController {
 
     @GetMapping(value = "/{bookingId}")
     public BookingDto findById(
-            @RequestHeader("X-Sharer-User-Id") Long userId,
+            @RequestHeader(USER_ID_HEADER) Long userId,
             @PathVariable Long bookingId) {
         return BookingMapper.toBookingDto(bookingService.findById(bookingId, userId));
     }
 
     @GetMapping
     public List<BookingDto> findByBookerId(
-            @RequestHeader("X-Sharer-User-Id") Long userId,
+            @RequestHeader(USER_ID_HEADER) Long userId,
             @RequestParam(defaultValue = "ALL") BookingService.BookingState state,
             @RequestParam(defaultValue = "0") Integer from,
             @RequestParam(defaultValue = "10") Integer size) {
@@ -64,7 +66,7 @@ public class BookingController {
 
     @GetMapping(value = "/owner")
     public List<BookingDto> findByOwnerId(
-            @RequestHeader("X-Sharer-User-Id") Long ownerId,
+            @RequestHeader(USER_ID_HEADER) Long ownerId,
             @RequestParam(defaultValue = "ALL") BookingService.BookingState state,
             @RequestParam(defaultValue = "0") Integer from,
             @RequestParam(defaultValue = "10") Integer size) {
